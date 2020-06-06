@@ -36,6 +36,10 @@ class LinebotsController < ApplicationController
 
   def message(event)
     # ここに書いていく
+    if event.message['text'].include?("ハロー")
+      response = "こんにちは！！"
+    end
+
     case event
     when Line::Bot::Event::Postback
       LineBot::PostbackEvent.send(event['postback']['data'])
@@ -63,5 +67,13 @@ class LinebotsController < ApplicationController
         nil
       end
     end
+
+    # case event
+    # when Line::Bot::Event::Message
+    #   {
+    #     type: 'text',
+    #     text: event['message']['text']
+    #   }
+    # end
   end
 end
