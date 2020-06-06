@@ -42,11 +42,25 @@ class LinebotsController < ApplicationController
     when Line::Bot::Event::Message
       if event['message']['text'] =~ /カテゴリ/
         LineBot::Messages::LargeCategoriesMessage.new.send
+
+      elsif event['message']['text'] =~ /おみくじ/
+        {
+          type: 'text',
+          text: '今日の運勢は' + ['大吉', '中吉', '小吉', '凶'].sample + 'です'
+        }
+
+      elsif event['message']['text'] =~ /FlexMessage/
+        LineBot::Messages::SampleMessage.new.send
+
+      elsif event['message']['text'] =~ /じゃんけん/
+        LineBot::Messages::JankenMessage.new.send
+
       else
         {
           type: 'text',
           text: event['message']['text']
         }
+        nil
       end
     end
   end
